@@ -1,0 +1,76 @@
+@font-face {
+  font-family: "LCDMono Normal";
+  font-weight: bold;
+  font-style: normal;
+  src: url("../fonts/lcdmono/lcdmono-bold.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  outline: none;
+  /* font-family: "Open Sans", "Cousine", "arial", sans-serif; */
+}
+
+.calc {
+  position: absolute;
+  width: 558px;
+  height: 659px;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: url(../img/korpus.png) no-repeat;
+}
+.shadow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.display {
+  position: relative;
+  width: 496px;
+  height: 146px;
+  top: 35px;
+  left: 30px;
+  background: url(../img/shadowDisp.png) no-repeat -160px -103px,
+    url(../img/ekran.png) no-repeat center 20px, url(../img/nakladka.png) no-repeat;
+}
+
+.klava {
+  position: relative;
+  width: 485px;
+  top: 42%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 17px;
+  grid-row-gap: 17px;
+}
+.btn_plus {
+  grid-area: 4 / 4 / 6 / 5;
+}
+.btn_img:active {
+  transform: scale(0.97, 0.97);
+}
+
+.final-result {
+  display: none;
+  position: absolute;
+  top: -80px;
+  font-size: 45px;
+}
+
+#result {
+  position: absolute;
+  top: 62px;
+  right: 85px;
+  font-family: "LCDMono Normal", arial;
+  font-size: 60px;
+}
