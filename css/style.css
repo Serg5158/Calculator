@@ -41,7 +41,7 @@
     url(../img/ekran.png) no-repeat center 20px, url(../img/nakladka.png) no-repeat;
 }
 
-.klava {
+.keyboard {
   position: relative;
   width: 485px;
   top: 42%;
@@ -60,14 +60,14 @@
   transform: scale(0.97, 0.97);
 }
 
-.final-result {
+.inputExpr {
   display: none;
   position: absolute;
   top: -80px;
   font-size: 45px;
 }
 
-#result {
+#resultat {
   position: absolute;
   top: 62px;
   right: 85px;

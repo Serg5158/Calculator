@@ -1,0 +1,16 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = serg5158
+	email = 57032446+Serg5158@users.noreply.github.com
+	mail = vseost@bk.ru
+[alias]
+	s = status --short
+	st = status
+	l = log --oneline --graph --decorate --all
+	g = log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+	br = branch
+	co = checkout

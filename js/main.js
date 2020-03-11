@@ -32,31 +32,37 @@ class Stack {
     return oldFirst.value; // возвращаем изьятое из стека значение
   }
 }
-
-let total = document.querySelector("#result"),
-  formula = document.querySelector(".final-result").value,
+//Calculator
+let total = document.querySelector("#resultat"),
+  formula = document.querySelector(".inputExpr").value,
   minus = false;
 //функция ввода и формирование строки выражения -> formula
 function input(i) {
   formula += i;
+  console.log(formula);
   output(formula);
 }
 //ограничение вывода на экран не более 12 символов
 function output(exp) {
-  total.innerHTML = exp;
-  if (total.innerHTML.length > 12) {
-    total.innerHTML = total.innerHTML.slice(total.innerHTML.length - 12);
+  // total.innerHTML = exp;
+  if (exp.length > 12) {
+    exp = exp.slice(exp.length - 12);
   }
+  total.textContent = exp;
+  console.log(total.textContent);
 }
+
 //вычисление выражения
+
 function result() {
-  total.innerHTML = eval(formula).toFixed(2);
-  if (total.innerHTML.length > 12) {
-    total.innerHTML = "overflow";
+  let res = eval(formula).toFixed(2);
+  if (res.length > 12) {
+    res = "overflow";
   }
-  if (total.innerHTML == Infinity) {
-    total.innerHTML = "error";
+  if (res == Infinity) {
+    res = "error";
   }
+  output(res);
 }
 //изменение знака выражения
 function znak() {
@@ -88,6 +94,12 @@ function reset() {
 //Поддержка ввода чисел и знаков с клавиатуры
 document.addEventListener("keydown", function(event) {
   switch (event.key) {
+    // case "Enter":
+    //   result();
+    //   console.log(total.textContent);
+    //   output(res);
+    //   formula = "0";
+    //   break;
     case "1":
       input("1");
       break;
@@ -154,9 +166,6 @@ document.addEventListener("keydown", function(event) {
     case "Backspace":
       backspace();
       break;
-  }
-  if (event.code == "Enter" || event.code == "NumpadEnter") {
-    result();
   }
 });
 let stackNumber = new Stack(),
