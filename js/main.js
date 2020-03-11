@@ -39,7 +39,6 @@ let total = document.querySelector("#resultat"),
 //функция ввода и формирование строки выражения -> formula
 function input(i) {
   formula += i;
-  console.log(formula);
   output(formula);
 }
 //ограничение вывода на экран не более 12 символов
@@ -49,12 +48,12 @@ function output(exp) {
     exp = exp.slice(exp.length - 12);
   }
   total.textContent = exp;
-  console.log(total.textContent);
 }
 
 //вычисление выражения
 
 function result() {
+  parser(formula);
   let res = eval(formula).toFixed(2);
   if (res.length > 12) {
     res = "overflow";
@@ -172,11 +171,13 @@ let stackNumber = new Stack(),
   stackOper = new Stack(),
   char = "";
 
-function Parser(formula) {}
+function parser(str) {
+  str = str.split("");
+
+  console.log(str);
+}
 
 stackNumber.push(1);
-
-stackOper.push("(");
 
 console.log(stackNumber);
 
