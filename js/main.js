@@ -32,39 +32,15 @@ class Stack {
     return oldFirst.value; // возвращаем изьятое из стека значение
   }
 }
-
 // let stackNumber = new Stack(),
 //   stackOper = new Stack(),
 //   char = "",
 //   numberBufer;
-
+//===========================================================
+//===========================================================
 function Token(type, value) {
   this.type = type;
   this.value = value;
-}
-//Проверка  запятая
-function isComma(ch) {
-  return /,/.test(ch);
-}
-//Проверка на цифры
-function isDigit(ch) {
-  return /\d/.test(ch);
-}
-//Проверка на буквы
-function isLetter(ch) {
-  return /[a-z]/i.test(ch);
-}
-//Проверка на операторы
-function isOperator(ch) {
-  return /\+|-|\*|\/|\^/.test(ch);
-}
-//Проверка на левую скобку
-function isLeftParenthesis(ch) {
-  return /\(/.test(ch);
-}
-//Проверка на праую скобку
-function isRightParenthesis(ch) {
-  return /\)/.test(ch);
 }
 // Токенизатор строкового выражения
 function tokenize(str) {
@@ -141,11 +117,31 @@ function tokenize(str) {
     }
   }
 }
-//===============тест================================================
-var tokens = tokenize("89sin(45) + 2.2x/7");
-tokens.forEach(function(token, index) {
-  console.log(index + "=> " + token.type + "(" + token.value + ")");
-});
+//Проверка  запятая
+function isComma(ch) {
+  return /,/.test(ch);
+}
+//Проверка на цифры
+function isDigit(ch) {
+  return /\d/.test(ch);
+}
+//Проверка на буквы
+function isLetter(ch) {
+  return /[a-z]/i.test(ch);
+}
+//Проверка на операторы
+function isOperator(ch) {
+  return /\+|-|\*|\/|\^/.test(ch);
+}
+//Проверка на левую скобку
+function isLeftParenthesis(ch) {
+  return /\(/.test(ch);
+}
+//Проверка на праую скобку
+function isRightParenthesis(ch) {
+  return /\)/.test(ch);
+}
+//====================================================================
 //====================================================================
 //Calculator
 let total = document.querySelector("#resultat"),
@@ -155,6 +151,7 @@ let total = document.querySelector("#resultat"),
 function input(i) {
   formula += i;
   output(formula);
+  return formula;
 }
 //ограничение вывода на экран не более 12 символов
 function output(exp) {
@@ -167,8 +164,9 @@ function output(exp) {
 
 //вычисление выражения
 
-function result() {
-  parser(formula);
+function resultat() {
+  console.log(tokenize(formula));
+  //parser(formula);
   let res = eval(formula).toFixed(2);
   if (res.length > 12) {
     res = "overflow";
@@ -210,7 +208,7 @@ document.addEventListener("keydown", function(event) {
   event.preventDefault();
   switch (event.key) {
     case "Enter":
-      result();
+      resultat();
       break;
     case "1":
       input("1");
@@ -246,7 +244,7 @@ document.addEventListener("keydown", function(event) {
       input("+");
       break;
     case "=":
-      result();
+      resultat();
       break;
     case "/":
       input("/");
@@ -280,3 +278,12 @@ document.addEventListener("keydown", function(event) {
       break;
   }
 });
+
+//===============T E S T================================================
+//var tokens = tokenize("89sin(45) + 2.2x/7");
+var tokens = tokenize(formula);
+tokens.forEach(function(token, index) {
+  console.log(index + "=> " + token.type + "(" + token.value + ")");
+});
+
+//===================================================================
