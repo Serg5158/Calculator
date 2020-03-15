@@ -149,7 +149,7 @@ tokens.forEach(function(token, index) {
 //====================================================================
 //Calculator
 let total = document.querySelector("#resultat"),
-  formula = document.querySelector(".inputExpr").value,
+  formula = "",
   minus = false;
 //функция ввода и формирование строки выражения -> formula
 function input(i) {
@@ -207,13 +207,11 @@ function reset() {
 
 //Поддержка ввода чисел и знаков с клавиатуры
 document.addEventListener("keydown", function(event) {
+  event.preventDefault();
   switch (event.key) {
-    // case "Enter":
-    //   result();
-    //   console.log(total.textContent);
-    //   output(res);
-    //   formula = "0";
-    //   break;
+    case "Enter":
+      result();
+      break;
     case "1":
       input("1");
       break;
