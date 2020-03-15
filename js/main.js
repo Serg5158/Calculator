@@ -33,48 +33,50 @@ class Stack {
   }
 }
 
-let stackNumber = new Stack(),
-  stackOper = new Stack(),
-  char = "",
-  numberBufer;
+// let stackNumber = new Stack(),
+//   stackOper = new Stack(),
+//   char = "",
+//   numberBufer;
 
 function Token(type, value) {
   this.type = type;
   this.value = value;
 }
-
+//Проверка  запятая
 function isComma(ch) {
   return /,/.test(ch);
 }
-
+//Проверка на цифры
 function isDigit(ch) {
   return /\d/.test(ch);
 }
-
+//Проверка на буквы
 function isLetter(ch) {
   return /[a-z]/i.test(ch);
 }
-
+//Проверка на операторы
 function isOperator(ch) {
   return /\+|-|\*|\/|\^/.test(ch);
 }
-
+//Проверка на левую скобку
 function isLeftParenthesis(ch) {
   return /\(/.test(ch);
 }
-
+//Проверка на праую скобку
 function isRightParenthesis(ch) {
   return /\)/.test(ch);
 }
-
+// Токенизатор строкового выражения
 function tokenize(str) {
+  //удалить пробелы из строки
   str.replace(/\s+/g, "");
+  // Разбить строку на отдельные символы
   str = str.split("");
-
+  //накопительные массивы
   var result = [];
   var letterBuffer = [];
   var numberBuffer = [];
-
+  //цикл обхода массива символов
   str.forEach(function(char, idx) {
     if (isDigit(char)) {
       numberBuffer.push(char);
@@ -139,12 +141,12 @@ function tokenize(str) {
     }
   }
 }
-
+//===============тест================================================
 var tokens = tokenize("89sin(45) + 2.2x/7");
 tokens.forEach(function(token, index) {
   console.log(index + "=> " + token.type + "(" + token.value + ")");
 });
-
+//====================================================================
 //Calculator
 let total = document.querySelector("#resultat"),
   formula = document.querySelector(".inputExpr").value,
