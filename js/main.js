@@ -1,5 +1,6 @@
-// ("use strict");
+"use strict";
 class StackNode {
+  //Дополнительные (узлы) - массивы внутри стека Stack
   constructor(value) {
     this.value = value;
     this.prev = null;
@@ -16,6 +17,17 @@ class Stack {
   size() {
     return this.countElement; // количество элементов в стеке
   }
+
+  pop() {
+    // извлечение элемента из стека
+    if (this.isEmpty()) return null;
+    // проверяем, если стек пуст - возвращаем null
+    let oldFirst = this.root; //	запоминаем верхнее значение
+    this.root = oldFirst.prev; // указатель текущего значения стека смещаем на пред. число
+    this.countElement = this.countElement - 1; // уменьшаем счетчик стека
+    return oldFirst.value; // возвращаем изьятое из стека значение
+  }
+
   push(value) {
     // добавление элемента в стек
     let oldFirst = this.root; // запоминаем верхнее значение
@@ -23,19 +35,23 @@ class Stack {
     this.root.prev = oldFirst; // значение под верхним элементом (предыдущее)
     this.countElement++; // увеличиваем счетчик стека
   }
-  pop() {
-    // извлечение элемента из стека
-    if (this.isEmpty) return null; // проверяем, если стек пуст - возвращаем null
-    let oldFirst = this.root; //	запоминаем верхнее значение
-    this.root = oldFirst.prev; // указатель текущего значения стека смещаем на пред. число
-    this.countElement--; // уменьшаем счетчик стека
-    return oldFirst.value; // возвращаем изьятое из стека значение
-  }
 }
-// let stackNumber = new Stack(),
-//   stackOper = new Stack(),
-//   char = "",
-//   numberBufer;
+
+// let stackIn = new Stack(); //Test
+// console.log(stackIn.size());
+// console.log(stackIn.isEmpty());
+// stackIn.push(1);
+// stackIn.push(2);
+// stackIn.push(3);
+// console.log(stackIn.size());
+// let x = stackIn.pop();
+// console.log(x);
+// let y = stackIn.pop();
+// console.log(y);
+// stackIn.pop();
+// console.log(stackIn.size());
+// console.log(stackIn.isEmpty());
+
 //===========================================================
 //===========================================================
 function Token(type, value) {
@@ -142,8 +158,9 @@ function isRightParenthesis(ch) {
   return /\)/.test(ch);
 }
 //====================================================================
-//====================================================================
 //Calculator
+//====================================================================
+
 let total = document.querySelector("#resultat"),
   formula = "",
   minus = false;
@@ -155,27 +172,83 @@ function input(i) {
 }
 //ограничение вывода на экран не более 12 символов
 function output(exp) {
-  // total.innerHTML = exp;
   if (exp.length > 12) {
     exp = exp.slice(exp.length - 12);
   }
   total.textContent = exp;
 }
+//определение приоритета оператора
+function getPriority(opr) {
+  if (opr == "+" || opr == "-") return 1;
+  if (opr == "*" || opr == "/" || opr == "%") return 2;
+  if (opr == "^") return 3;
+  return 0;
+}
 
 //вычисление выражения
 
 function resultat() {
-  console.log(tokenize(formula));
-  //parser(formula);
-  let res = eval(formula).toFixed(2);
-  if (res.length > 12) {
-    res = "overflow";
+  //console.log(tokenize(formula));
+  let numbers = new Stack(),
+    operators = new Stack(),
+    tokens = tokenize(formula),
+    token,
+    oper,
+    prevOper;
+  for (let i = 0; i < tokens.length; i++) {
+    //console.log(tokens);
+    token = tokens[i];
+    if (token.type == "Literal") {
+      numbers.push(token.value);
+    }
+    if (token.type == "Operator") {
+      oper = token.value;
+      if (operators.isEmpty() === true) {
+        operators.push(token.value);
+      } else {
+        prevOper = operators.root.value;
+        if (getPriority(oper) < getPriority(prevOper) || numbers.size() < 2) {
+          operators.push(token.value);
+        } else {
+          evaluate(oper);
+        }
+      }
+    }
+
+    //console.log(operators.root.value);
+    // if (token.type == "Left Parenthesis") operators.push(token.value);
+    // if (token.type == "Right Parenthesis") operators.push(token.value);
   }
-  if (res == Infinity) {
-    res = "error";
+  function evaluate(oper) {
+    let x, y, z;
+    x = Number(numbers.pop());
+    y = Number(numbers.pop());
+    if (oper == "+") z = y + x;
+    if (oper == "-") z = y - x;
+    if (oper == "*") z = y * x;
+    if (oper == "/") z = y / x;
+    if (oper == "^") z = y ** x;
+    numbers.push(z);
+    console.log(z);
   }
-  output(res);
+  if ((numbers.countElement = 1) && (operators.countElement = 0)) {
+    output(numbers.root.value);
+  }
+  console.log(numbers.root.value);
+  console.log(operators.root.value);
 }
+
+//console.log(index + "=> " + token.type + "(" + token.value + ")");
+//parser(formula);
+//   let res = eval(formula).toFixed(2);
+//   if (res.length > 12) {
+//     res = "overflow";
+//   }
+//   if (res == Infinity) {
+//     res = "error";
+//   }
+//   output(res);
+// }
 //изменение знака выражения
 function znak() {
   if (formula[0] !== "-") {
@@ -280,10 +353,10 @@ document.addEventListener("keydown", function(event) {
 });
 
 //===============T E S T================================================
-//var tokens = tokenize("89sin(45) + 2.2x/7");
-var tokens = tokenize(formula);
-tokens.forEach(function(token, index) {
-  console.log(index + "=> " + token.type + "(" + token.value + ")");
-});
-
+// var tokens = tokenize("89sin(45) + 2.2x^2");
+// //var tokens = tokenize(formula);
+// tokens.forEach(function(token, index) {
+//   console.log(index + "=> " + token.type + "(" + token.value + ")");
+// });
+// console.log(tokens[0].type);
 //===================================================================

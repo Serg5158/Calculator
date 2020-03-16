@@ -11,7 +11,7 @@ class Stack {
   pop() {
     if (this.size) {
       this.data.pop();
-      this.size++;
+      this.size--;
     }
   }
   print() {
