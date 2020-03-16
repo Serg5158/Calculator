@@ -60,13 +60,6 @@
   transform: scale(0.97, 0.97);
 }
 
-.inputExpr {
-  display: none;
-  position: absolute;
-  top: -80px;
-  font-size: 45px;
-}
-
 #resultat {
   position: absolute;
   top: 62px;
